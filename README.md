@@ -8,7 +8,7 @@
 
 ## React 개발환경 Setting
 
-**:one:** : [React][reactlink] 공식 사이트 > 새로운 React 앱 만들기 > [create-react-app][create-react-applink] 접속
+**:one:** : :link:[React][reactlink] 공식 사이트 > 새로운 React 앱 만들기 > :link:[create-react-app][create-react-applink] 접속
     
 ```html
 npx create-react-app my-app
@@ -18,7 +18,7 @@ npx create-react-app my-app
 
 [create-react-applink]: https://create-react-app.dev/ "Go create-react-app"
 
-**:two:** : [nodejs][nodejslink] 접속 > LTS 버전 설치
+**:two:** : :link:[nodejs][nodejslink] 접속 > LTS 버전 설치
 
 [nodejslink]: https://nodejs.org/ko "Go nodejs"
 
