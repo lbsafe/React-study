@@ -198,5 +198,7 @@ npm start
         </nav>
         }
     ```
+:link:[React-props][Reactpropslink] : 완성소스 및 결과창 정리 보기
 
+[Reactpropslink]: https://github.com/lbsafe/React-study/blob/main/study_02.md "React props"
 ***
