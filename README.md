@@ -3,6 +3,7 @@
 <p align="center"><img src="https://user-images.githubusercontent.com/65703793/230308709-b1b3a903-506a-445b-962c-2a8865b7b7fe.png" alt="js" width="250px"></p>
 
 ## React 에 대하여
+
 >메타에서 개발한 오픈 소스 자바스크립트 라이브러리이다. SPA을 전제로 하고 있으며, Dirty checking과 Virtual DOM을 활용하여 업데이트 해야하는 DOM 요소를 찾아서 해당 부분만 업데이트하기 때문에, 리렌더링이 잦은 동적인 모던 웹에서 엄청나게 빠른 퍼포먼스가 가능하다. 프레임워크가 아니라 라이브러리이기에 다른 프레임워크에 붙여서 사용하는 것도 가능하며, React Hooks라는 강력한 메소드들을 지원하면서 사실상 웹 프론트엔드 개발의 표준으로 자리잡았다. 또한 Next.js 등의 등장으로 인해 SSG, SSR등을 할 수 있게 되었다.
 ***
 
@@ -68,4 +69,134 @@ npm start
     ```
 
 >컴포넌트를 통해 소스를 줄이고, 한번의 수정으로 해당 컴포넌트를 사용 하는 모든 부분을 수정할 수 있다.
+***
+
+## props(속성)
+
+>html 태그의 속성과 같이 컴포넌트에도 속성을 사용한다.
+
+**html의 속성예시**
+
+```html
+<img src="images.jpg" width="100px" height="100px">
+        속성              속성         속성
+```
+**props 사용방법**
+
+1. 컴포넌트에 title을 준다.
+
+    ```js
+    <Header title="WEB"></Header>
+    ``` 
+
+2. 컴포넌트 함수에 첫번째 파라미터로 props 이름을 붙인다.
+
+    ```js
+    function Header(props){
+        return <header>
+            <h1><a href="/">WEB</a></h1>
+        </header>
+    }
+    ``` 
+
+3. {props.title}을 적용한다.   
+중괄호의 정보는 일반적인 문자열이 아니라 표현식으로 인식된다.
+
+    ```js
+    function Header(props){
+        return <header>
+            <h1><a href="/">{props.title}</a></h1>
+        </header>
+    }
+    ``` 
+    위 방식을 통해 화면에 출력된 값은 기존과 동일하게 'WEB'이 출력된다.
+    
+4. 예시
+
+    ```js
+    function Header(props){
+        return <header>
+            <h1><a href="/">{props.title}</a></h1>
+        </header>
+    }
+    function Article(props){
+        return <article>
+            <h2>{props.title}</h2>
+            {props.body}
+        </article>
+    }
+    function App() {
+        return (
+            <div className="App">
+                <Header title="WEB"></Header>
+                <Article title="Welcome! React!" body="Hello, 건희"></Article>
+            </div>
+        );
+    }
+    ```
+**props(속성)을 응용한 태그생성**   
+
+1. 변수선언.    
+    1-1. 예시 기준 topics 변수 선언  
+    1-2. 여러개의 정보를 담아야 하니 배열[] 생성  
+    1-3. 각각의 정보를 담을 객채{} 생성   
+    1-4. 고유의 아이디 값과 속성 값 설정
+
+    ```js
+    function App() {
+        const topics = [
+            {id:1, title:'html', body:'html is ...'},
+            {id:2, title:'css', body:'css is ...'},
+            {id:3, title:'javascript', body:'javascript is ...'}
+        ]
+        return (
+            <div className="App">
+            <Header title="WEB"></Header>
+            <Nav></Nav>
+            <Article title="Welcome! React!" body="Hello, 건희"></Article>
+            </div>
+        );
+    }
+    ```
+2. 선언한 변수를 내부의 props으로 전달
+
+    ```js
+    function App() {
+        const topics = [
+            {id:1, title:'html', body:'html is ...'},
+            {id:2, title:'css', body:'css is ...'},
+            {id:3, title:'javascript', body:'javascript is ...'}
+        ]
+        return (
+            <div className="App">
+            <Header title="WEB"></Header>
+            <Nav topics={topics}></Nav>
+            <Article title="Welcome! React!" body="Hello, 건희"></Article>
+            </div>
+        );
+    }
+    ```
+
+3. 첫번째 파라미터(props)에 선언 된 변수(topics) 를 받아 정보를 넣어준다.  
+    **:warning:주의사항**   
+    3-1. 동적으로 만들어주는 태그는 각자 key라는 props 필요하다.   
+    3-2. key 값은 고유한 값이 필요하기에 중복되지 않게 한다.   
+    3-3. key 값은 전체가 아닌 해당 반복문 안에서만 고유한 값이면 된다.
+    3-4. react는 자동으로 생성 된 태그의 key 라는 약속 된 props 부여를 통해 react가 성능을 높히고 정확한 동작을 할 수 있게 해준다.
+
+    ```js
+    function Nav(props){
+        const lis = []
+        for(let i=0; i<props.topics.length; i++){
+            let t = props.topics[i];
+            lis.push(<li key={t.id}><a href={'/read/'+t.id}>{t.title}</a></li>)
+        }
+        return <nav>
+            <ol>
+                {lis}
+            </ol>
+        </nav>
+        }
+    ```
+
 ***
