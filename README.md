@@ -202,3 +202,40 @@ npm start
 
 [Reactpropslink]: https://github.com/lbsafe/React-study/blob/main/study_02.md "React props"
 ***
+
+## 컴포넌트에 이벤트 부여하기
+
+1. 컴포넌트에 함수를 전달한다.   
+onChangeMode 라는 props의 값으로 함수를 전달한다.
+
+    ```js
+    <div className="App">
+      <Header title="WEB" onChangeMode={()=>{
+        alert('Header')
+      }}></Header>
+    </div>
+
+    기존 funtion을 arrow funtion으로 축약해서 사용한다.
+    <Before>
+    onChangeMode={function(){alert('Header')}}
+    <After>
+    onChangeMode={()=>{alert('Header')}}
+    ```
+
+2. 이벤트 대상에 이벤트를 걸어주고, 함수를 호출해준다.
+
+    ```js
+    function Header(props){
+        return <header>
+            <h1><a href="/" onClick={(event)=>{
+            event.preventDefault();  // a태그의 기본 이벤트 방지
+            props.onChangeMode();  // props의 이벤트 호출
+            }}>{props.title}</a></h1>
+        </header>
+    }
+    ```
+
+:link:[React-event][React-event] : 완성소스 및 결과창 정리 보기
+
+[React-event]: https://github.com/lbsafe/React-study/blob/main/study_03.md "React event"
+***
