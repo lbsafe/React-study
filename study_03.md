@@ -63,7 +63,7 @@ export default App;
 **:star:최종결과:star:**
 <p align="center"><img src="https://user-images.githubusercontent.com/65703793/235866393-b44a4ae0-c66a-4280-a126-a6143fdff1d4.PNG" alt="study" width="1000px"></p>
 
-> nav의 각 a 태그 id를 호출 하는 것 또 한 응용해서 가능하다.
+> nav의 각 a 태그 id를 호출하는 것도 응용해서 가능하다.
 <p align="center"><img src="https://user-images.githubusercontent.com/65703793/235866908-2ed9fbdc-6ac6-43e1-8727-6a58755c2cf8.PNG" alt="study" width="1000px"></p>
 
 ***
