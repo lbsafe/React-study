@@ -242,7 +242,7 @@ onChangeMode 라는 props의 값으로 함수를 전달한다.
 
 ## state 개념 정리
 
->state를 사용하기 위해서는 {useState} HOOK을 사용한다.
+>state를 사용하기 위해서는 {useState} HooK을 사용한다.
 
 1. useState를 import 해준다.
 
