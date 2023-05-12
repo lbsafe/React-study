@@ -181,7 +181,7 @@ npm start
     **:warning:주의사항**   
     3-1. 동적으로 만들어주는 태그는 각자 key라는 props 필요하다.   
     3-2. key 값은 고유한 값이 필요하기에 중복되지 않게 한다.   
-    3-3. key 값은 전체가 아닌 해당 반복문 안에서만 고유한 값이면 된다.
+    3-3. key 값은 전체가 아닌 해당 반복문 안에서만 고유한 값이면 된다.   
     3-4. react는 자동으로 생성 된 태그의 key 라는 약속 된 props 부여를 통해 react가 성능을 높히고 정확한 동작을 할 수 있게 해준다.
 
     ```js
@@ -238,4 +238,58 @@ onChangeMode 라는 props의 값으로 함수를 전달한다.
 :link:[React-event][React-event] : 완성소스 및 결과창 정리 보기
 
 [React-event]: https://github.com/lbsafe/React-study/blob/main/study_03.md "React event"
+***
+
+## state 개념 정리
+
+>state를 사용하기 위해서는 {useState} HOOK을 사용한다.
+
+1. useState를 import 해준다.
+
+    ```js
+    import {useState} from 'react';
+    ```
+
+2. state(상태)를 만들어 준다.
+
+    2-1. 지역변수를 state(상태)로 쓴다.
+    ```js
+    Before
+    const mode = 'WELCOME';
+
+    After
+    const [mode, setMode] = useState('WELCOME');
+    
+    mode = 초기 값
+    setMode = 변할 값
+    useState('WELCOME'); = 초기 값 설정
+    ```
+
+    2-2. 바꿀 값을 설정한다.
+
+    ```js
+    <Header title="WEB" onChangeMode={()=>{
+      setMode('WELCOME');
+    }}></Header>
+    <Nav topics={topics} onChangeMode={(id)=>{
+      setMode('READ');
+    }}></Nav>
+    ```
+
+**prop과 state의 공통점**
+>**prop**과 **state**는 일반 자바스크립트 객체이며, 값을 변경 시 새로운 return 값을 만들어 ui를 바꾸어 준다.
+
+**차이점**
+>* **prop** 은 컴포넌트를 사용하는 외부자를 위한 데이터   
+:arrow_right: prop은 컴포넌트에 전달한다. *ex)* 함수 매개 변수
+>* **state** 는 컴포넌트를 만드는 내부자를 위한 데이터   
+:arrow_right: state는 컴포넌트 안에서 관리한다. *ex)* 함수 내 선언 된 변수
+
+**주의사항**
+> * state는 상태를 바꾸기 위해 사용한다. *ex)* 클래스명, 내용, id값 등
+>* state 사용 시 의도치 않은 리랜더링으로 성능상 문제가 발생 될 수 있기에 적절하게 사용한다.
+
+:link:[React-state][React-state] : 예시 및 결과창 정리 보기
+
+[React-state]: https://github.com/lbsafe/React-study/blob/main/study_04.md "React state"
 ***
