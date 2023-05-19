@@ -285,11 +285,163 @@ onChangeMode 라는 props의 값으로 함수를 전달한다.
 >* **state** 는 컴포넌트를 만드는 내부자를 위한 데이터   
 :arrow_right: state는 컴포넌트 안에서 관리한다. *ex)* 함수 내 선언 된 변수
 
-**주의사항**
+**:warning:주의사항**
 > * state는 상태를 바꾸기 위해 사용한다. *ex)* 클래스명, 내용, id값 등
 >* state 사용 시 의도치 않은 리랜더링으로 성능상 문제가 발생 될 수 있기에 적절하게 사용한다.
 
 :link:[React-state][React-state] : 예시 및 결과창 정리 보기
 
 [React-state]: https://github.com/lbsafe/React-study/blob/main/study_04.md "React state"
+***
+
+## Create(생성) 구현하기
+>글 생성, 폼 구현 원리 등을 살펴볼 수 있다.
+
+1. 기능을 구현할 버튼을 만들어준다.
+
+    ```js
+    <a href="/create" onClick={(event)=>{
+      event.preventDefault(); /* a태그의 기본동작 방지 */
+      setMode('CREATE'); /* 모드 값 변경 */
+    }}>Create</a>
+    ```
+
+2. 모드가 CREATE 일 경우를 만들어 준다.
+
+    ```js
+    else if(mode === 'CREATE'){
+        content = <Create onCreate={(_title, _body)=>{
+            const newTopic = {id:nextId, title:_title, body:_body}
+            const newTopics = [...topics]
+            newTopics.push(newTopic);
+            setTopics(newTopics);
+            setMode('READ');
+            setId(nextId);
+            setNextId(nextId + 1);
+        }}></Create>
+    }
+    ```
+
+3. Create 컴포넌트를 만들어준다.
+
+    ```js
+    function Create(props){
+        return <article>
+            <h2>Create</h2>
+            <form onSubmit={(event)=>{
+                event.preventDefault(); /* form태그의 기본동작 방지 */
+                const title = event.target.title.value; /* input에 name value 값을 가져옴 */
+                const body = event.target.body.value; /* textarea에 body value 값을 가져옴 */
+                props.onCreate(title, body);
+            }}>
+                <p><input type="text" name="title" placeholder="title"></input></p>
+                <p><textarea name="body" placeholder='body'></textarea></p>
+                <p><input type='submit' value='Create'></input></p>
+            </form>
+        </article>
+    }
+    ```
+
+4. 기존 topics를 state로 만들어준다.
+    
+    ```js
+    const [topics, setTopics] = useState([
+        {id:1, title:'html', body:'html is ...'},
+        {id:2, title:'css', body:'css is ...'},
+        {id:3, title:'javascript', body:'javascript is ...'}
+    ]);
+    ```
+
+**:heavy_exclamation_mark: 중요사항**
+
+:one: state(상태)를 만들 때 PRIMITIVE(원시 데이터 타입) 일 경우
+>기존 방식대로 진행한다.
+```js
+const [value, setValue] = useState(PRIMITIVE);
+
+<PRIMITIVE 종류>
+string, number, bigint, boolean, undefined, symbol, null
+```
+
+:two: state(상태)를 만들 때 Object(범 객체)일 경우
+>데이터를 복제한다.
+```js
+const [value, setvalue] = useState(Object);
+
+<Object 종류>
+object(객체), array(배열)
+```
+
+**2-1 object(객체)일 경우**
+
+step1.
+> "{ }"(중괄호)에 ...을 찍고 value를 넣어주면 value 값을 복제한 새로운 데이터가 newValue의 값이 된다.
+```js 
+newValue = {...value}
+```
+
+step2.
+> newValue 값을 변경한다.
+
+step3.
+> 변경된 newValue를 setValue에 넣어준다.
+```js
+setValue(newValue)
+```
+
+**2-2 array(배열)일 경우**
+
+step1.
+> "[ ]"(대괄호)에 ...을 찍고 value를 넣어주면 value 값을 복제한 새로운 데이터가 newValue의 값이 된다.
+```js 
+newValue = [...value]
+```
+
+step2.
+> newValue 값을 변경한다.
+
+step3.
+> 변경된 newValue를 setValue에 넣어준다.
+```js
+setValue(newValue)
+```
+
+**:pushpin: 원리 설명**
+
+예시1 case - 배열)
+```js
+const [value, setValue] = useState([1]);
+
+value.push(2);
+// 오리지널(value) 데이터를 바꾼 것이다.
+
+setValue(value);
+// 기존의 value와 setValue가 같은 데이터이기에 컴포넌트를 다시 랜더링 하지 않는다.
+```
+
+예시2 case - 원시 데이터)
+```js
+const [value, setValue] = useState(1);
+
+setValue(value);
+// 오리지널(value) 데이터는 1이고 setValue의 데이터는 2이기에 다시 랜더링 된다.
+```
+
+예시3 case - 객체 데이터 복제)
+```js
+const [value, setValue] = useState([1]);
+
+newValue = [...value]
+// 오리지널(value) 데이터를 복제한다. 현재 newValue는 1
+
+newValue.push(2);
+// 데이터 값을 변경한다. 현재 newValue는 2
+
+setValue(newValue);
+// 기존의 value와 setValue가 다른 데이터이기에 컴포넌트를 다시 랜더링 한다.
+```
+
+:link:[React-create][React-create] : 완성소스 및 결과창 정리 보기
+
+[React-create]: https://github.com/lbsafe/React-study/blob/main/study_05.md "React Create"
 ***
