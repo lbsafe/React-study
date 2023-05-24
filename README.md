@@ -445,3 +445,128 @@ setValue(newValue);
 
 [React-create]: https://github.com/lbsafe/React-study/blob/main/study_05.md "React Create"
 ***
+
+## Update 구현하기
+>글의 수정 및 등록 원리를 살펴볼 수 있다.
+
+1. 상세보기 페이지에서만 업데이트 기능 버튼을 추가해준다.
+
+    ```js
+    let contextControl = null;
+    // 지역변수 선언
+
+    contextControl = <li><a href={"/update/"+id} onClick={event=>{
+      event.preventDefault();
+      setMode('UPDATE');
+    }}>Update</a></li>
+    // {"/update/"+id}를 통해 주소에 고유 id 값 추가
+
+    <ul>
+      <li><a href="/create" onClick={(event)=>{
+        event.preventDefault();
+        setMode('CREATE');
+      }}>Create</a></li>
+      {contextControl}
+    </ul>
+    // 추가 부분
+    ```
+
+2. 모드가 'READ' 즉 상세보기 페이지일때만 버튼을 추가해준다.
+
+    ```js
+    else if(mode === 'READ'){ //모드 'READ' 조건
+        let title, body = null;
+
+        for(let i=0; i<topics.length; i++){
+            if(topics[i].id === id){
+                title = topics[i].title;
+                body = topics[i].body;
+            }
+        }
+        content = <Article title={title} body={body}></Article>
+        
+        contextControl = <li><a href={"/update/"+id} onClick={event=>{
+            event.preventDefault();
+            setMode('UPDATE');
+        }}>Update</a></li>
+        // 버튼 이벤트에 setMode('UPDATE');를 추가하고 모드가 UPDATE일 경우를 추가한다.
+    }
+    ```
+
+3. input에 기존 title의 value값과 body의 value값을 가져오고, 새로운 값으로 수정했을 때 변경 된 값을 넣어준다.
+
+    ```js
+    function Update(props){
+    const [title, setTitle] = useState(props.title);
+    const [body, setBody] = useState(props.body);
+    // 타이틀 value와 body의 value를 state화 시켜준다.
+
+    return <article>
+        <h2>Update</h2>
+        <form onSubmit={(event)=>{
+            event.preventDefault();
+            <!-- 폼 기본 이벤트 방지 -->
+            const title = event.target.title.value;
+            const body = event.target.body.value;
+            props.onUpdate(title, body);
+        }}>
+            <p><input type="text" name="title" placeholder="title" value={title} onChange={event=>{
+                setTitle(event.target.value);
+            }}></input></p>
+            <p><textarea name="body" placeholder='body' value={body} onChange={event=>{
+                setBody(event.target.value);
+            }
+    <!-- props로 들어온 title 값을 state를 통해 value값으로 준다. state는 컴포넌트 안에서 바꿀 수 있기에 onChange를 통해 새로운 값을 넣어주면서 컴포넌트가 다시 랜더링 된다. -->
+            }></textarea></p>
+            <p><input type='submit' value='Update'></input></p>
+        </form>
+    </article>
+    }
+    ```
+
+4. 업데이트 버튼을 클릭 시 이벤트를 추가해준다.
+
+    ```js
+    else if(mode === 'UPDATE'){
+        // 모드가 업데이트 일 경우
+        let title, body = null;
+
+        for(let i=0; i<topics.length; i++){
+            if(topics[i].id === id){
+                title = topics[i].title;
+                body = topics[i].body;
+            }
+        }
+        // 수정 페이지의 input의 title value와 textarea의 body value 값을 가져온다.
+        
+        content = <Update title={title} body={body} onUpdate={(title, body)=>{
+            <!-- Update 컴포넌트에 title과 body 값을 넣어준다. -->
+
+            const newTopics = [...topics]
+            <!-- 변경 해야할 topics가 데이터가 객체(배열)이기에 기존 토픽 값을 복사해준다. -->
+
+            const updatedTopic = {id:id, title: title, body: body}
+            for(let i=0; i<newTopics.length; i++){
+                if(newTopics[i].id === id){
+                    <!-- newTopics 아이디와 우리가 선택한 topics의 id가 같을 때 -->
+                    newTopics[i] = updatedTopic;
+                    <!-- 지금 선택한 topics를 updatedTopic으로 교체한다. -->
+                    break;
+                }
+            }
+            <!-- 기존 topics 값을 바꿔준다. -->
+            setTopics(newTopics);
+            <!-- 새로운 topics를 저장한다. -->
+            setMode('READ');
+            <!-- 변경 시 변경 된 상세보기 페이지로 이동 -->
+        }}></Update>
+    }
+    ```
+
+:link:[React-update][React-update] : 완성소스 및 결과창 정리 보기
+
+[React-update]: https://github.com/lbsafe/React-study/blob/main/study_06.md "React Update"
+***
+
+
+
