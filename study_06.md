@@ -161,9 +161,9 @@ export default App;
 > 업데이트 기능을 통해 기존의 타이틀과 내용을 수정 시 기존 항목의 내용을 변경할 수 있다.
 
 **Before**
-<p align="center"><img src="https://github.com/lbsafe/React-study/assets/65703793/4cbc11ca-af1c-4159-9825-58510e045c26" alt="study" width="1000px"></p>
+<p align="center"><img src="https://github.com/lbsafe/React-study/assets/65703793/06ba9647-7c34-4a95-a7dc-2f752a664da0" alt="study" width="1000px"></p>
 
 **After**
-<p align="center"><img src="https://github.com/lbsafe/React-study/assets/65703793/d6e79ddb-d622-4569-bc37-b5d718347d9d" alt="study" width="1000px"></p>
+<p align="center"><img src="https://github.com/lbsafe/React-study/assets/65703793/935e225f-ebca-4c1b-8a9d-39e09d85d1a3" alt="study" width="1000px"></p>
 
 ***
