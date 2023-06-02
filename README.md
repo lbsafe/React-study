@@ -568,5 +568,58 @@ setValue(newValue);
 [React-update]: https://github.com/lbsafe/React-study/blob/main/study_06.md "React Update"
 ***
 
+## Delete 구현하기
+>글의 삭제 원리를 살펴볼 수 있다.
 
+1. 삭제 버튼을 추가 해준다.
 
+    ```js
+    contextControl = <>
+      <li><a href={"/update/"+id} onClick={event=>{
+        event.preventDefault();
+        setMode('UPDATE');
+      }}>Update</a></li>
+      <li>
+        <input type='button' value="Delete"/>
+      </li>
+    </>
+    ```
+    **:warning:주의사항**
+    > * React는 하나의 태그 안에 작성해야 한다.
+    > * 복수의 태그를 그룹화 하기 위해 빈 태그를 사용한다.    
+    *ex)* <></>
+
+2. 클릭 시 필요한 이벤트를 작성한다.
+
+    ```js
+    contextControl = <>
+      <li><a href={"/update/"+id} onClick={event=>{
+        event.preventDefault();
+        setMode('UPDATE');
+      }}>Update</a></li>
+      <li>
+        <input type='button' value="Delete" onClick={()=>{
+          const newTopics = []
+          <!-- 빈 배열을 작성한다. -->
+
+          for(let i=0; i<topics.length; i++){
+            if(topics[i].id !== id){
+              newTopics.push(topics[i]);
+            }
+          }
+        <!-- for문을 통해 현재 선택한 값과 id 값이 일치하지 않는 topics를 newTopics에 push 한다. -->
+
+          setTopics(newTopics);
+        <!-- setTopics에 newTopics를 담아준다. -->
+
+          setMode('WELCOME');
+        <!-- 상세 페이지를 삭제하였기에, 메인 페이지로 보내준다. -->
+        }} />
+      </li>
+    </>
+    ```
+
+:link:[React-delete][React-delete] : 완성소스 및 결과창 정리 보기
+
+[React-delete]: https://github.com/lbsafe/React-study/blob/main/study_06.md "React Delete"
+***
