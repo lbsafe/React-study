@@ -621,5 +621,5 @@ setValue(newValue);
 
 :link:[React-delete][React-delete] : 완성소스 및 결과창 정리 보기
 
-[React-delete]: https://github.com/lbsafe/React-study/blob/main/study_06.md "React Delete"
+[React-delete]: https://github.com/lbsafe/React-study/blob/main/study_07.md "React Delete"
 ***
