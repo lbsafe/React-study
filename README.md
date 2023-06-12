@@ -292,6 +292,34 @@ onChangeMode 라는 props의 값으로 함수를 전달한다.
 :link:[React-state][React-state] : 예시 및 결과창 정리 보기
 
 [React-state]: https://github.com/lbsafe/React-study/blob/main/study_04.md "React state"
+
+***
+
+## useState와 콜백함수 응용
+> useState를 이용한 예제를 만들면서, 콜백함수를 응용해 코드의 성능을 높혀줄 수 있다.
+
+**:one:** useState 훅은 state, setState 를 배열 형태로 리턴해준다.
+```js
+  const [state, setState] = useState(초기값);
+```
+**:two:** state를 변경할 때 새로 변경할 state 값이 이전 state와 연관 되어 있다면(비교, 추가 등등), setState의 인자로 새로운 state를 리턴하는 콜백함수를 넣어준다.
+```js
+  setState((prevState) =>{
+    //some work
+    return newState;
+  });
+```
+**:three:** useState를 사용해서 초기값을 받아올 때, 무거운 작업을 해야한다면 useState의 인자로 콜백함수를 넣어주면 처음 랜더링이 될 때만 실행할 수 있다.
+```js
+  useState(() =>{
+    return heavyWorks();
+  });
+```
+
+:link:[React-state2][React-state2] : 예시 및 결과창 정리 보기
+
+[React-state2]: https://github.com/lbsafe/React-study/blob/main/study_08.md "React state2"
+
 ***
 
 ## Create(생성) 구현하기
