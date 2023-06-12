@@ -309,7 +309,7 @@ onChangeMode 라는 props의 값으로 함수를 전달한다.
     return newState;
   });
 ```
-**:three:** useState를 사용해서 초기값을 받아올 때, 무거운 작업을 해야한다면 useState의 인자로 콜백함수를 넣어주면 처음 랜더링이 될 때만 실행할 수 있다.
+**:three:** useState를 사용해서 초기값을 받아올 때, 무거운 작업을 해야한다면 useState의 인자로 콜백함수를 넣어줘서 처음 랜더링이 될 때만 실행할 수 있다.
 ```js
   useState(() =>{
     return heavyWorks();
