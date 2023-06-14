@@ -240,9 +240,9 @@ onChangeMode 라는 props의 값으로 함수를 전달한다.
 [React-event]: https://github.com/lbsafe/React-study/blob/main/study_03.md "React event"
 ***
 
-## state 개념 정리
+## useState 개념 정리
 
->state를 사용하기 위해서는 {useState} HooK을 사용한다.
+> state를 사용하기 위해서는 {useState} HooK을 사용한다.
 
 1. useState를 import 해준다.
 
@@ -287,7 +287,7 @@ onChangeMode 라는 props의 값으로 함수를 전달한다.
 
 **:warning:주의사항**
 > * state는 상태를 바꾸기 위해 사용한다. *ex)* 클래스명, 내용, id값 등
->* state 사용 시 의도치 않은 리랜더링으로 성능상 문제가 발생 될 수 있기에 적절하게 사용한다.
+>* state 사용 시 의도치 않은 리렌더링으로 성능상 문제가 발생 될 수 있기에 적절하게 사용한다.
 
 :link:[React-state][React-state] : 예시 및 결과창 정리 보기
 
@@ -309,7 +309,7 @@ onChangeMode 라는 props의 값으로 함수를 전달한다.
     return newState;
   });
 ```
-**:three:** useState를 사용해서 초기값을 받아올 때, 무거운 작업을 해야한다면 useState의 인자로 콜백함수를 넣어줘서 처음 랜더링이 될 때만 실행할 수 있다.
+**:three:** useState를 사용해서 초기값을 받아올 때, 무거운 작업을 해야한다면 useState의 인자로 콜백함수를 넣어줘서 처음 렌더링이 될 때만 실행할 수 있다.
 ```js
   useState(() =>{
     return heavyWorks();
@@ -320,6 +320,80 @@ onChangeMode 라는 props의 값으로 함수를 전달한다.
 
 [React-state2]: https://github.com/lbsafe/React-study/blob/main/study_08.md "React state2"
 
+***
+
+## useEffect 개념 정리
+
+**:star: useEffect 언제 사용하는가?**
+
+<p align="center"><img src="https://github.com/lbsafe/React-study/assets/65703793/d253c8c8-13e3-4ea5-a34e-141b13ac2f42" alt="study" width="1000px"></p>
+
+>어떠한 컴포넌트가 마운트 되었을 때 업데이트 될 때 혹은 마운트해제 되었을 때   
+특정 작업을 처리할 코드를 실행시켜 주고 싶다면 **useEffect**를 사용한다.
+
+**:one: useEffect**   
+> useEffect Hook은 인자로 콜백함수를 받는다.
+
+**:pushpin: 콜백함수란?**   
+:arrow_forward: 다른 함수의 인자로 전달 된 함수
+
+**:two: useEffect의 케이스**
+
+1. useEffect의 인자로 하나의 콜백함수만 받는 경우
+
+    > 컴포넌트가 렌더링 될 때마다 매번 콜백이 실행   
+    *ex)* 컴포넌트가 처음 화면에 렌더링 될 때, 다시 렌더링 될 때 실행
+
+    ```js
+    useEffect(() => { 
+
+        작업... 
+
+    });
+    ```
+2. useEffect의 첫번째 인자로 콜백함수, 두번째 인자로 배열을 받는 경우
+    > 컴포넌트가 처음 화면에 렌더링 될 때, 배열 안의 요소의 값(value)이 바뀔 때만 실행   
+    :warning: 빈 배열 [] 을 전달해주면 컴포넌트가 처음 렌더링 될 때만 실행
+
+    ```js
+    useEffect(() => {
+
+        작업...
+
+    },[value]);
+
+    <빈 배열일 때 처음 화면에 렌더링 될 때만 실행>
+    useEffect(() => {
+
+        작업...
+
+    }, []);
+    ```
+
+**:three: Clean Up - 정리**
+
+> 함수를 리턴 해주면 해당 컴포넌트가 언마운트(화면에서 사라질 때) 될 때,   
+혹은 다음 렌더링 시 불러올 useEffect가 실행되기 이전에 리턴한 함수가 실행 된다.
+
+* *ex)* 구독 시 구독을 해지 해주는 작업
+* *ex)* 타이머를 멈추는 작업
+* *ex)* 등록한 이벤트를 제거 해주는 작업
+
+```js
+useEffect(() => {
+    
+    구독...
+
+    return() => {
+
+        구독 해지...
+    }
+
+}, []);
+```
+:link:[React-effect][React-effect] : 완성소스 및 결과창 정리 보기
+
+[React-effect]: https://github.com/lbsafe/React-study/blob/main/study_09.md "React effect"
 ***
 
 ## Create(생성) 구현하기
@@ -444,7 +518,7 @@ value.push(2);
 // 오리지널(value) 데이터를 바꾼 것이다.
 
 setValue(value);
-// 기존의 value와 setValue가 같은 데이터이기에 컴포넌트를 다시 랜더링 하지 않는다.
+// 기존의 value와 setValue가 같은 데이터이기에 컴포넌트를 다시 렌더링 하지 않는다.
 ```
 
 예시2 case - 원시 데이터)
@@ -452,7 +526,7 @@ setValue(value);
 const [value, setValue] = useState(1);
 
 setValue(value);
-// 오리지널(value) 데이터는 1이고 setValue의 데이터는 2이기에 다시 랜더링 된다.
+// 오리지널(value) 데이터는 1이고 setValue의 데이터는 2이기에 다시 렌더링 된다.
 ```
 
 예시3 case - 객체 데이터 복제)
@@ -466,7 +540,7 @@ newValue.push(2);
 // 데이터 값을 변경한다. 현재 newValue는 2
 
 setValue(newValue);
-// 기존의 value와 setValue가 다른 데이터이기에 컴포넌트를 다시 랜더링 한다.
+// 기존의 value와 setValue가 다른 데이터이기에 컴포넌트를 다시 렌더링 한다.
 ```
 
 :link:[React-create][React-create] : 완성소스 및 결과창 정리 보기
@@ -544,7 +618,7 @@ setValue(newValue);
             <p><textarea name="body" placeholder='body' value={body} onChange={event=>{
                 setBody(event.target.value);
             }
-    <!-- props로 들어온 title 값을 state를 통해 value값으로 준다. state는 컴포넌트 안에서 바꿀 수 있기에 onChange를 통해 새로운 값을 넣어주면서 컴포넌트가 다시 랜더링 된다. -->
+    <!-- props로 들어온 title 값을 state를 통해 value값으로 준다. state는 컴포넌트 안에서 바꿀 수 있기에 onChange를 통해 새로운 값을 넣어주면서 컴포넌트가 다시 렌더링 된다. -->
             }></textarea></p>
             <p><input type='submit' value='Update'></input></p>
         </form>
