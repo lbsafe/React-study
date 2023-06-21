@@ -396,6 +396,71 @@ useEffect(() => {
 [React-effect]: https://github.com/lbsafe/React-study/blob/main/study_09.md "React effect"
 ***
 
+## useRef 개념 정리
+
+**특징 1)**
+> 함수형 컴포넌트에서 useRef를 부르면 ref 오브젝트를 반환해준다.   
+인자로 넣어준 초기값은 ref 안에 current에 저장이 된다.
+
+```js
+const ref = useRef(value)
+    ↑
+{ current: value }
+```
+
+**특징 2)**
+> ref 오브젝트 수정이 가능해서 언제든 우리가 원하는 값으로 수정이 가능하다.
+
+```js
+{ current: "hi" } const ref = useRef("hi")
+
+{ current: "hello" } ref.current = "hello"
+
+{ current: "nice" } ref.current = "nice"
+```
+
+**특징 3)**
+> 반환 된 ref는 컴포넌트가 계속 렌더링 되어도 언마운트 되기 전까지 사용 가능하다.
+
+**:star: useRef 언제 사용하는가?**
+
+1. state와 같이 어떠한 값을 저장하는 저장공간으로 사용한다.
+
+    State와 Ref의 차이점
+    ```html
+    State의 변화 → 렌더링 → 컴포넌트 내부 변수들 초기화
+
+    Ref의 변화 → No 렌더링 → 변수들의 값 유지
+    ```
+    > 불필요한 렌더링을 막을 수 있다.   
+    컴포넌트가 렌더링 되어도 Ref의 값은 유지
+
+    :heavy_exclamation_mark: 변화는 감지 되어야 하지만 변경 시 렌더링을 발생시키지 말아야 하는 값을 관리할 때 편리하다.
+
+2. Ref를 통해 DOM 요소에 접근하기 간편하다.
+
+    > useRef를 사용할 때 반환 되는 오브젝트를 접근하고자 하는 태그의 ref 속성으로 넣어준다.
+    
+    *ex)*   
+    input 요소를 클릭하지 않아도 Ref를 사용해 focus()를 잡아 줄 수 있다.  
+    Document.querySelector() 와 유사
+
+    ```js
+    const ref = useRef(value);
+              ↘
+    <input ref={ ref } />
+
+    const pTag = useRef(value);
+             ↘
+    <p ref={ pTag }></p>
+    ```
+
+:link:[React-Ref][React-ref] : 완성소스 및 결과창 정리 보기
+
+[React-ref]: https://github.com/lbsafe/React-study/blob/main/study_10.md "React ref"
+
+***
+
 ## Create(생성) 구현하기
 >글 생성, 폼 구현 원리 등을 살펴볼 수 있다.
 
